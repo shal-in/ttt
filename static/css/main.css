@@ -1,0 +1,54 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background: green;
+    display: block;
+    border: 1px solid black;
+}
+
+#main-container {
+    margin: auto;
+    max-width: 600px;
+    height: 92vh;
+    background-color: yellow;
+    display: block;
+}
+
+#title-container {
+    background-color: gainsboro;
+    width: 200px;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#image {
+    margin: auto;
+    height: 350px;
+    width: 350px;
+    background-color: wheat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#btn-container {
+    width: 200px;
+    margin: auto;
+}
+
+#input-container {
+    width: 200px;
+    margin: auto;
+}
+
+.start-btn {
+    background-color: red;
+}
+
+#game-input {
+    width: 100px;
+}
