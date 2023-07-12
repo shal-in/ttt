@@ -49,6 +49,10 @@ body {
     background-color: red;
 }
 
-#game-input {
-    width: 100px;
+#input-container {
+    display: none
+}
+
+#game-input:focus {
+    outline: none;
 }

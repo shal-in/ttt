@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <title>tictactoe by shalin</title>
+    <script 
+        src="https://cdn.socket.io/4.6.0/socket.io.min.js" 
+        integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" 
+        crossorigin="anonymous">
+    </script>
 </head>
 <body>
     <div id="main-container">
@@ -20,11 +25,11 @@
                 <button class="start-btn" id="join-btn">join game</button>
             </div>
             <div id="input-container">
-                
+                <input class="input-btn" id="game-input" placeholder="game id">
+                <button class="input-btn" id="play-btn">play</button>
             </div>
         </div>
     </div>
-
     <script src="{{ url_for('static', filename='js/index.js') }}"></script>
 </body>
 </html>
