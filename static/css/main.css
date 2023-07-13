@@ -1,58 +1,286 @@
 *{
     padding: 0;
     margin: 0;
+    box-sizing: border-box
 }
 
-body {
-    background: green;
-    display: block;
-    border: 1px solid black;
+:root {
+    --background:#13505B;
+    --primary-color: #A0D2DB;
+    --secondary-color: #FFFFFA ;
+    --winningSquares: #0E3B43;
+    --mainFont: 'Times New Roman';
+    --mainFont: 'Nanum Pen Script';
+    --borderTest: rgba(0, 0, 0, 0.88);
+    /* --borderTest: transparent; */
+}
+
+body{
+    color:var(--primary-color);
+    font-family: var(--mainFont);
+    background-color: var(--background);
 }
 
 #main-container {
+    padding: 0;
+    max-width: 450px;
+    height: 90vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: var(--background);
+    border: 2px solid var(--borderTest) ;
     margin: auto;
-    max-width: 600px;
-    height: 92vh;
-    background-color: yellow;
-    display: block;
 }
 
-#title-container {
-    background-color: gainsboro;
-    width: 200px;
-    margin: auto;
+.theme-container{
     display: flex;
     flex-wrap: wrap;
+    align-items: end;
+    justify-content: end;
+    padding:3px;
+    padding-top: 6px;
+    border: 1px solid var(--borderTest);
 }
 
-#image {
-    margin: auto;
-    height: 350px;
-    width: 350px;
-    background-color: wheat;
+#theme-btn{
+    margin-right: 2px;
+    background-color: var(--background);
+    width: 60px;
+    height: 22px;
+    font-family: var(--mainFont);
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: underline;
+    color: var(--primary-color);
+    border: 1px solid var(--borderTest);
+}
+
+#theme-btn:hover{
+    color: var(--secondary-color);
+    cursor: pointer;
+}
+
+#header-container{
+    border: 2px solid var(--borderTest) ;
+    width: 650px;
+    height: 212px;
     display: flex;
-    justify-content: center;
+    flex-wrap: wrap;
     align-items: center;
+    justify-content: center;
 }
 
-#btn-container {
-    width: 200px;
+#header-text {
+    width: 630px;
+    height: 140px;
+    font-size: 150px;
+    text-align: center;
+    border: 1px solid var(--borderTest);
+    color: black;
     margin: auto;
 }
 
-#input-container {
-    width: 200px;
+#subheader-text{
+    padding-top: 0px;
+    font-size: 70px;
+    height: 70px;
+    width: 457px;
+    border: 1px solid var(--borderTest);
+    color: black;
     margin: auto;
 }
 
-.start-btn {
-    background-color: red;
+#start-btn-container{
+    margin-top: 17px;
+    border: 2px solid var(--borderTest);
+    border-top: 5px solid black;
+    width: 650px;
+    height: 200px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
 }
 
-#input-container {
-    display: none
+#local-btn{
+    background-color: transparent;
+    border: 1px solid var(--borderTest);
+    margin-left: 150px;
+    margin-right: auto;
+    width: 125px;
+    height: 60px;
+    font-family: var(--mainFont);
+    font-size: 60px;
+    font-weight: bold;
+    text-decoration: underline;
+    color: var(--primary-color);
 }
 
-#game-input:focus {
+#local-btn:hover{
+    color: var(--secondary-color)
+}
+
+#online-btn{
+    background-color: transparent;
+    border: 1px solid var(--borderTest);
+    margin-left: auto;
+    margin-right: 145px;
+    width: 161px;
+    height: 60px;
+    font-family: var(--mainFont);
+    font-size: 60px;
+    font-weight: bold;
+    text-decoration: underline;
+    color: var(--primary-color);
+}
+
+#online-btn:hover{
+    color: var(--secondary-color)
+}
+
+#join-input{
+    border: 1px solid var(--borderTest);
+    color: var(--primary-color);
+    background-color: transparent;
+    font-size: 60px;
+    font-family: var(--mainFont);
+    font-weight: bold;
+    text-decoration: underline dashed;
+    height: 66.5px;
+    width: 345px;
+    margin-right: 10px;
+    margin-left: auto;
+    margin-top: 6.5px;
+}
+
+#join-input:focus{
+    color: var(--secondary-color);
+    text-decoration-color: var(--primary-color);
     outline: none;
+}
+
+#join-input:not(:focus)::placeholder{
+    color: var(--primary-color);
+}
+
+#join-input:hover:not(:focus)::placeholder{
+    color: var(--secondary-color);
+}
+
+#join-input:focus::placeholder{
+    color: var(--secondary-color);
+}
+
+#join-btn{
+    background-color: transparent;
+    border: 1px solid var(--borderTest);
+    /* border: none; */
+    margin-right: auto;
+    margin-left: 10px;
+    width: 105px;
+    height: 60px;
+    padding: none;
+    font-family: var(--mainFont);
+    font-size: 60px;
+    font-weight: bold;
+    text-decoration: underline;
+    color: var(--primary-color);
+}
+
+#join-btn:hover{
+    color: var(--secondary-color)
+}
+
+#example-text {
+    background-color: transparent;
+    border: 1px solid var(--borderTest);
+    margin-left: 126px;
+    margin-right: auto;
+    width: 213px;
+    height: 25px;
+    font-family: var(--mainFont);
+    font-size: 25px;
+    font-weight: bold;
+    color: var(--primary-color);
+    padding-bottom: 40px;
+}
+
+#home-btn{
+    background-color: transparent;
+    border: 1px solid var(--borderTest);
+    /* border: none; */
+    margin-right: auto;
+    margin-left: auto;
+    width: 98px;
+    height: 40px;
+    padding: none;
+    font-family: var(--mainFont);
+    font-size: 40px;
+    font-weight: bold;
+    text-decoration: underline;
+    color: var(--primary-color);
+}
+
+#home-btn:hover{
+    color: var(--secondary-color)
+}
+
+#restart-btn{
+    background-color: transparent;
+    border: 1px solid var(--borderTest);
+    /* border: none; */
+    margin-right: auto;
+    margin-left: auto;
+    width: 118px;
+    height: 40px;
+    padding: none;
+    font-family: var(--mainFont);
+    font-size: 40px;
+    font-weight: bold;
+    text-decoration: underline;
+    color: var(--primary-color);
+}
+
+#restart-btn:hover{
+    color: var(--secondary-color)
+}
+
+#gameboard{
+    margin-top: 30px;
+    width: 400px;
+    height: 347px;
+    border: 2px solid var(--borderTest);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    justify-content: center;
+}
+
+.grid{
+    height: 115px;
+    width: 115px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-color);
+    font-size: 80px;
+    background-color: transparent;
+    border: 1.5px solid var(--primary-color);
+}
+
+.grid:nth-child(1),.grid:nth-child(2),.grid:nth-child(3) {
+    border-top: none;
+}
+
+.grid:nth-child(1),.grid:nth-child(4),.grid:nth-child(7) {
+    border-left: none;
+}
+
+.grid:nth-child(3),.grid:nth-child(6),.grid:nth-child(9) {
+    border-right: none;
+}
+
+.grid:nth-child(7),.grid:nth-child(8),.grid:nth-child(9) {
+    border-bottom: none;
 }

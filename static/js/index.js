@@ -2,16 +2,11 @@ const socket = io();
 let sessionid;
 let gameid;
 
-const titleBtnEl = document.getElementById('title-btn');
-const startBtns = document.querySelectorAll('.start-btn');
-const localBtnEl = startBtns[0];
-const createBtnEl = startBtns[1];
-const joinBtnEl = startBtns[2];
-const btnContainerEl = document.getElementById('btn-container');
-const inputContainerEl = document.getElementById('input-container');
-const gameInputEl = document.getElementById('game-input');
-const playBtnEl = document.getElementById('play-btn');
-
+const titleBtnEl = document.getElementById('subheader-btn');
+const localBtnEl = document.getElementById('local-btn');
+const createBtnEl = document.getElementById('create-btn');
+const joinBtnEl = document.getElementById('join-btn');
+const gameInputEl = document.getElementById('join-input');
 
 titleBtnEl.addEventListener('click', function titleBtnFunction() {
     window.open('https://github.com/shal-in/', '_blank');
@@ -19,20 +14,14 @@ titleBtnEl.addEventListener('click', function titleBtnFunction() {
 localBtnEl.addEventListener('click', localBtnFunction);
 createBtnEl.addEventListener('click', createBtnFunction);
 joinBtnEl.addEventListener('click', joinBtnFunction);
-playBtnEl.addEventListener('click', () => playBtnFunction(gameInputEl));   
 gameInputEl.addEventListener('keyup', (event) => {
     if (event.keyCode === 13) {
-        playBtnFunction(gameInputEl);
+        joinBtnFunction(gameInputEl);
     }
 });
 
 function localBtnFunction() {
     console.log('local');
-
-    payLoad = {
-        key: 'value'
-    }
-    socket.emit('local', payLoad);
 }
 
 function createBtnFunction() {
@@ -41,37 +30,7 @@ function createBtnFunction() {
     socket.emit('create');
 }
 
-function joinBtnFunction() {
-    event.stopPropagation();
-
-    startBtns.forEach((btn) => {
-        btn.style.backgroundColor = 'blue';
-    });
-
-    inputContainerEl.style.display = 'flex'
-
-    localBtnEl.removeEventListener('click', localBtnFunction);
-    createBtnEl.removeEventListener('click', createBtnFunction);
-    joinBtnEl.removeEventListener('click', joinBtnFunction);
-    btnContainerEl.addEventListener('click', btnContainerFunction);
-
-    gameInputEl.focus()
-}
-
-function btnContainerFunction() {
-    startBtns.forEach((btn) => {
-        btn.style.backgroundColor = 'red';
-    });
-
-    inputContainerEl.style.display = 'none';
-
-    localBtnEl.addEventListener('click', localBtnFunction);
-    createBtnEl.addEventListener('click', createBtnFunction);
-    joinBtnEl.addEventListener('click', joinBtnFunction);
-    btnContainerEl.removeEventListener('click', btnContainerFunction);
-}
-
-function playBtnFunction(inputEl) {
+function joinBtnFunction(inputEl) {
     console.log('play');
     gameid = inputEl.value;
     if (gameid) {

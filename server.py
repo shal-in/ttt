@@ -3,6 +3,11 @@ from flask_socketio import SocketIO, join_room, leave_room, send, emit
 import secrets
 import random
 
+# create a Flask and socketIO app
+app = Flask(__name__, static_folder='static')
+app.config['SECRET_KEY'] = 'secret_key'
+socketio = SocketIO(app)
+
 def generate_gameid():
     words = [
         'ace', 'add', 'age', 'air', 'ale', 'and', 'ant', 'ape', 'apt', 'ark',
@@ -42,17 +47,16 @@ def generate_gameid():
 
     return gameid
 
-# create a Flask and socketIO app
-app = Flask(__name__, static_folder='static')
-app.config['SECRET_KEY'] = 'secret'
-socketio = SocketIO(app)
-
 rooms = {}
 
 # define routes
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/local')
+def local():
+    return render_template('local.html')
 
 # define socketio events
 @socketio.on('connect')
@@ -67,7 +71,7 @@ def on_create():
     gameid = generate_gameid()
     session['gameid'] = gameid
     sessionid = session['sessionid']
-    print (f'{sessionid} created {gameid}') #remove later
+    print (f'{sessionid} created {gameid}') # remove later
     room = {
         'members': [sessionid]
     }
@@ -98,7 +102,7 @@ def on_join(data):
         emit('join_response', {'message': members}, room=sessionid)
     
 
-        
+
 
 
 

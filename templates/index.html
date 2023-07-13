@@ -1,35 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    <title>tictactoe by shalin</title>
-    <script 
-        src="https://cdn.socket.io/4.6.0/socket.io.min.js" 
-        integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" 
-        crossorigin="anonymous">
-    </script>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block content %}
+
     <div id="main-container">
-        <div id="title-container">
-            <div id="title-text">tic tac toe by&nbsp;</div>
-            <button id="title-btn">shalin</button>
+        <div id="header-container">
+            <h1 id="header-text">tic tac toe</h1>
+            <h2 id="subheader-text">made by&nbsp;</h2>
+            <button id="subheader-btn">shalin</button>
         </div>
-        <div id="image">insert image</div>
-        <div id="start-container">
-            <div id="btn-container">
-                <button class="start-btn" id="local-btn">local</button>
-                <button class="start-btn" id="create-btn">create game</button>
-                <button class="start-btn" id="join-btn">join game</button>
-            </div>
-            <div id="input-container">
-                <input class="input-btn" id="game-input" placeholder="game id">
-                <button class="input-btn" id="play-btn">play</button>
-            </div>
-        </div>
-    </div>
+        <div id="start-btn-container">
+            <button class="start-btn" id="local-btn">local</button>
+            <button class="start-btn" id="create-btn">create game</button>
+            <input class="start-btn" type="text" id="join-input" placeholder="game code      ">
+            <button class="start-btn" id="join-btn">join game</button>
+            <div id="example-text">e.g. now-red-say</div>
+        </div>  
+    </div>  
     <script src="{{ url_for('static', filename='js/index.js') }}"></script>
-</body>
-</html>
+
+{% endblock %}
