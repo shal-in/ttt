@@ -2,6 +2,12 @@ const socket = io();
 let sessionid;
 let gameid;
 
+let join_errorMsg = localStorage.getItem('join_error');
+if (join_errorMsg) {
+    alert(join_errorMsg);
+}
+localStorage.removeItem('join_error');
+
 const titleBtnEl = document.getElementById('subheader-btn');
 const localBtnEl = document.getElementById('local-btn');
 const createBtnEl = document.getElementById('create-btn');
@@ -22,6 +28,8 @@ gameInputEl.addEventListener('keyup', (event) => {
 
 function localBtnFunction() {
     console.log('local');
+    
+    window.location.href = '/local';
 }
 
 function createBtnFunction() {
@@ -31,12 +39,15 @@ function createBtnFunction() {
 }
 
 function joinBtnFunction(inputEl) {
-    console.log('play');
+    console.log('join');
     gameid = inputEl.value;
+    inputEl.value = '';
+    if (!gameid) {
+        alert('please input a game code');
+    }
     if (gameid) {
-        inputEl.value = '';
         if (gameid.length !== 11) {
-            alert('invalid gameid');
+            alert('invalid game code');
             return;
         } 
 
@@ -48,15 +59,14 @@ function joinBtnFunction(inputEl) {
     }
 }
 
-socket.on('connection_response', function(data) {
-    sessionid = data.sessionid;
-    console.log(`sessionid: ${sessionid}`);
-});
-
 socket.on('create_response', function(data) {
     gameid = data.gameid;
-    console.log(`gameid: ${gameid}`);
+    if (!gameid) {
+        alert('error in creating game. please refresh and try again');
+        return;
+    }
     copyToClipboard(gameid);
+    window.location.href = `/${gameid}`;
 });
 
 socket.on('join_error', function(data) {
@@ -65,8 +75,8 @@ socket.on('join_error', function(data) {
 })
 
 socket.on('join_response', function(data) {
-    console.log(`${gameid} joined successfully`);
-    console.log(data.message)
+    gameid = data.gameid;
+    window.location.href = `/${gameid}`;
 })
 
 

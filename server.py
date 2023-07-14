@@ -1,5 +1,5 @@
-from flask import Flask, render_template, jsonify, request, session, redirect
-from flask_socketio import SocketIO, join_room, leave_room, send, emit
+from flask import Flask, render_template, request, session, redirect, url_for
+from flask_socketio import SocketIO, join_room, leave_room, emit
 import secrets
 import random
 
@@ -58,6 +58,15 @@ def index():
 def local():
     return render_template('local.html')
 
+@app.route('/online')
+def online():
+    return render_template('online.html')
+
+@app.route('/<gameid>')
+def game_page(gameid):
+    print (gameid)
+    return render_template('online.html')
+
 # define socketio events
 @socketio.on('connect')
 def on_connect():
@@ -69,37 +78,57 @@ def on_connect():
 @socketio.on('create')
 def on_create():
     gameid = generate_gameid()
-    session['gameid'] = gameid
-    sessionid = session['sessionid']
-    print (f'{sessionid} created {gameid}') # remove later
+    while gameid in rooms:
+            gameid = generate_gameid()
     room = {
-        'members': [sessionid]
+        'members': [], # [sessionid, playerid]
+        'moves': [] # [playerid, move]
     }
     rooms[gameid] = room
     emit('create_response', { 'gameid': gameid })
 
+@socketio.on('game_connect')
+def on_game_connect(data):
+    sessionid = request.sid
+    gameid = data['gameid']
+    members = rooms[gameid]['members']
+
+    if gameid not in rooms: # invalid gameid
+        emit('join_error', { 'message': 'invalid gameid' })
+        return
+
+    if len(members) == 2: # game lobby full
+        emit('join_error', { 'message': 'game lobby full' })
+        return
+    
+    if len(members) == 0:
+        playerid = 'X'
+    elif len(members) == 1:
+        playerid = 'O'
+    members.append([sessionid, playerid])
+    print (f'{sessionid} is {playerid} in {gameid}')
+
+    for member in members:
+        sessionid = member[0]
+        playerid = member[1]
+        payLoad = { 'playerid': playerid, 'members': members }
+        emit('game_connect_response', payLoad, room=sessionid)
+
+
 @socketio.on('join')
 def on_join(data):
     gameid = data['gameid']
-    sessionid = session['sessionid']
 
     if gameid not in rooms:
         emit('join_error', { 'message': 'invalid gameid' })
         return
     
     room = rooms[gameid]
-
     if len(room['members']) == 2:
         emit('join_error', { 'message': 'game lobby full' })
         return
 
-    members = room['members']
-
-    members.append(sessionid)
-
-    print (members)
-    for sessionid in members:
-        emit('join_response', {'message': members}, room=sessionid)
+    emit('join_response', { 'gameid': gameid })
     
 
 
