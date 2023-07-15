@@ -7,10 +7,10 @@ headerTextEl.addEventListener('click', () => {
 
 })
 
-let gridsEl = Array.from(document.getElementsByClassName('grid'))
+let gridsEl = Array.from(document.getElementsByClassName('grid'));
 gridsEl.forEach(grid => grid.addEventListener('click', boxClicked));
 
-let restartBtnEl = document.getElementById('restart-btn')
+let restartBtnEl = document.getElementById('restart-btn');
 restartBtnEl.addEventListener('click', restartBtnFunction);
 
 let spaces = Array(9).fill(null);
@@ -22,7 +22,7 @@ let winningSquares = null;
 function boxClicked(e) {
     const id = e.target.id;
     if (!spaces[id]) {
-        gridsEl[id].style.cursor = 'default'
+        gridsEl[id].style.cursor = 'default';
         spaces[id] = currentPlayer;
         if (currentPlayer == 1) {
             gridText = "X";
@@ -41,7 +41,7 @@ function boxClicked(e) {
         
         else {
             if (turnCount >= 9){
-            winnerText.textContent = `draw!`
+            winnerText.textContent = `draw!`;
             }
         }
 
@@ -67,7 +67,7 @@ function checkIfWinner() {
     ]
     
     for (let i = 0; i < winningCombos.length; i++) {
-        [a,b,c] = winningCombos[i]
+        [a,b,c] = winningCombos[i];
         if (spaces[a] && (spaces[a] == spaces[b] && spaces[a] == spaces[c])) {
             gridsEl.forEach(grid => grid.removeEventListener('click',boxClicked));
             return [a,b,c]

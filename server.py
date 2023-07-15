@@ -64,7 +64,6 @@ def online():
 
 @app.route('/<gameid>')
 def game_page(gameid):
-    print (gameid)
     return render_template('online.html')
 
 # define socketio events
@@ -72,7 +71,6 @@ def game_page(gameid):
 def on_connect():
     sessionid = request.sid
     session['sessionid'] = sessionid
-    print (f'{sessionid} connect')
     emit('connection_response', { 'sessionid': sessionid })
 
 @socketio.on('create')
@@ -91,12 +89,12 @@ def on_create():
 def on_game_connect(data):
     sessionid = request.sid
     gameid = data['gameid']
-    members = rooms[gameid]['members']
 
     if gameid not in rooms: # invalid gameid
         emit('join_error', { 'message': 'invalid gameid' })
         return
 
+    members = rooms[gameid]['members']
     if len(members) == 2: # game lobby full
         emit('join_error', { 'message': 'game lobby full' })
         return
@@ -106,12 +104,12 @@ def on_game_connect(data):
     elif len(members) == 1:
         playerid = 'O'
     members.append([sessionid, playerid])
-    print (f'{sessionid} is {playerid} in {gameid}')
 
+    moves = rooms[gameid]['moves']
     for member in members:
         sessionid = member[0]
         playerid = member[1]
-        payLoad = { 'playerid': playerid, 'members': members }
+        payLoad = { 'playerid': playerid, 'moves': moves }
         emit('game_connect_response', payLoad, room=sessionid)
 
 
@@ -130,6 +128,19 @@ def on_join(data):
 
     emit('join_response', { 'gameid': gameid })
     
+@socketio.on('play')
+def on_play(data):
+    sessionid = request.sid
+    gameid = data['gameid']
+    move = data['move']
+    moves = rooms[gameid]['moves']
+    moves.append(move)
+
+    payLoad = { 'move': move }
+
+    members = rooms[gameid]['members']
+    for member in members:
+        emit('play_response', payLoad, room=member[0])
 
 
 
